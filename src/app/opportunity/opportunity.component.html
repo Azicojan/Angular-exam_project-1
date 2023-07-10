@@ -1,0 +1,53 @@
+<div class="container">
+  <h1 class="title is-4">Opportunity Rover</h1>
+  <p>Data is available up to May 2018</p>
+
+  <!-- Date Selection Form -->
+  <div class="field is-horizontal">
+    <div class="field-label is-normal">
+      <label for="date" class="label">Select Date:</label>
+    </div>
+    <div class="field-body">
+      <div class="field">
+        <div class="control">
+          <input type="date" id="date" [(ngModel)]="selectedDate" class="input">
+        </div>
+      </div>
+    </div>
+    <div class="field">
+      <button class="button is-primary" (click)="searchPhotos()">Search</button>
+    </div>
+  </div>
+
+  <!-- Photos and Information -->
+  <div *ngIf="isSearchPerformed">
+    <h2 class="subtitle is-5">Photos</h2>
+    <p>Total Photos: {{ photos.length }}</p>
+
+    <!-- Display up to 20 photos -->
+    <div class="columns is-multiline">
+      <div class="column is-4" *ngFor="let photo of photos | slice:0:20">
+        <div class="card">
+          <div class="card-image">
+            <figure class="image">
+              <img [src]="photo.img_src" [alt]="photo.id">
+            </figure>
+          </div>
+          <div class="card-content">
+            <div class="content">
+              <p><strong>Date:</strong> {{ photo.earth_date }}</p>
+              <p><strong>Camera:</strong> {{ photo.camera.full_name }}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Not Found Component -->
+    <app-not-found *ngIf="photos.length === 0"></app-not-found>
+  </div>
+
+  <!-- Home Button -->
+  <button routerLink="/" class="button is-primary">Back to Home</button>
+</div>
+
